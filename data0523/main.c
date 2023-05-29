@@ -159,13 +159,11 @@ int main(void)
 			if (search_list(head, fruit) != NULL)
 			{
 				printf("%s is already exists\n", fruit.name);
-				print_list(head);
 
 				continue;
 			}
 			else {
-				insert_last(head, fruit);
-				print_list(head);
+				head = insert_last(head, fruit);
 
 			}
 			
@@ -175,39 +173,55 @@ int main(void)
 		else if (menu == 2)
 		{
 			element fruit;
-			printf("Fruit name to delete : ");
-			scanf_s("%s", &fruit.name, sizeof(fruit.name));
-		
-			ListNode* tmp = NULL;
-			if (tmp = search_list(head, fruit) != NULL)
-			{
-				
-				print_list(head);
+			printf("Fruit name to delete: ");
+			scanf_s("%s", fruit.name, sizeof(fruit.name));
+
+			ListNode* prev = NULL;
+			ListNode* curr = head;
+
+			while (curr != NULL) {
+				if (strcmp(curr->data.name, fruit.name) == 0) {
+					if (prev == NULL) {
+						head = delete_first(head);
+					}
+					else {
+						head = delete(head, prev);
+					}
+					deleteList = insert_last(deleteList, fruit);
+
+
+					printf("%s has been deleted\n", fruit.name);
+					break;
+				}
+				prev = curr;
+				curr = curr->link;
 			}
-			else {
-				printf("%s is not on the list.\n");
-				continue;
+
+			if (curr == NULL) {
+				printf("%s is not in the list.\n", fruit.name);
 			}
 
 
 		}
 		else if (menu == 3)
 		{
-
+			printf("Deleted Fruit List: ");
+			print_list(deleteList);
 		}
 		else if (menu == 4)
 		{
-
+			return 0;
 		}
 		else {
-			printf("insert menu \n");
+			printf("insert right menu \n");
 			continue;
 		}
+
+		print_list(head);
+		printf("==========================\n");
 	}
 
 
 
-
-	print_list(head);
 	return 0;
 }
